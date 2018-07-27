@@ -1,0 +1,16 @@
+{
+  "name": "exif-extractor-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dms2dec": "^1.1.0",
+    "fast-exif": "^1.0.1",
+    "recursive-readdir": "^2.2.2"
+  }
+}
