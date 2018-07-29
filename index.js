@@ -2,6 +2,7 @@ const fs = require('fs');
 const exif = require('fast-exif');
 const dms2dec = require('dms2dec');
 
+// const basePath = 'J:/01_Foto/02_Reisen/2018/02_NYC/Jan';
 const basePath = './data';
 
 const images = fs.readdirSync(basePath);
@@ -14,8 +15,11 @@ async function readExifData() {
 
     for (let idx = 0; idx < images.length; idx++) {
         const filename = images[idx];
-
+        if(filename.indexOf('.NEF') == -1){
+            continue;
+        }
         try {
+            console.log(filename);
             let exif = await readExif(basePath, filename);
             geojson
                 .features
@@ -36,7 +40,7 @@ async function writeGeojson() {
 function readExif(basePath, filename) {
     return new Promise((resolve, reject) => {
         exif
-            .read(basePath + "/" + filename)
+            .read(basePath + "/" + filename, true)
             .then((exif) => {
                 if (!exif) 
                     reject("Exif data could not be read");
@@ -51,6 +55,8 @@ function readExif(basePath, filename) {
                     type: "Feature",
                     properties: {
                         fíle: filename,
+                        lat: decGPS[0],
+                        lng: decGPS[1]
                         // exif: exif.exif, image: exif.image
                     },
                     geometry: {
